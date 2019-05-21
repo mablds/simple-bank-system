@@ -1,0 +1,24 @@
+{
+  "name": "to-do-list",
+  "version": "1.0.0",
+  "description": "simple api using node.js, html, css, js and mongoDB to create a list of tasks",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mablds/to-do-list.git"
+  },
+  "author": "mablds",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mablds/to-do-list/issues"
+  },
+  "homepage": "https://github.com/mablds/to-do-list#readme",
+  "dependencies": {
+    "debug": "^4.1.1",
+    "express": "^4.17.0",
+    "http": "0.0.0"
+  }
+}
