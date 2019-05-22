@@ -44,6 +44,7 @@ const del = router.delete('/', (req, res, next) => {
 app.use('/', route)
 app.use('/account', create)
 app.use('/account', put)
+app.use('/account', del)
 
 // Quando não pertencer a nenhuma rota configurada ...
 app.use('*', (req, res) => {
