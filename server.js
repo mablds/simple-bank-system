@@ -1,7 +1,6 @@
 const express = require('express')
 const app = express()
 const port = normalizePort(process.env.PORT) || process.argv[2] || 3000
-const teste = require()
 
 // Body-parse pra trabalhar com json
 // app.use(express.json()) 

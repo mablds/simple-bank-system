@@ -1,7 +1,7 @@
 {
-  "name": "to-do-list",
+  "name": "simple bank system",
   "version": "1.0.0",
-  "description": "simple api using node.js, html, css, js and mongoDB to create a list of tasks",
+  "description": "Practicing MongoDB + Nodejs API using a simple bank systems.",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
