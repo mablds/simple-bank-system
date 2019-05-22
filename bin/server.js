@@ -6,7 +6,7 @@ app.on('error', onError)
 
 // Listener da porta
 app.listen(port, () => {
-    console.log(' -- SERVER ON! -- \nPorta: ' + port + ' ...')
+    console.log(' ----------------------\n      SERVER ON!\n      Porta: ' + port + '\n ----------------------')
 })
 
 // FUNCTION QUE CONSULTA AS VARIÁVEIS QUE O EDGE SETA POR PADRÃO (ELE VERIFICA AS PORTAS DISPONÍVEIS).
