@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mablds/to-do-list.git"
+    "url": "git+https://github.com/mablds/simple-bank-system.git"
   },
   "author": "mablds",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/mablds/to-do-list/issues"
+    "url": "https://github.com/mablds/simple-bank-system/issues"
   },
-  "homepage": "https://github.com/mablds/to-do-list#readme",
+  "homepage": "https://github.com/mablds/simple-bank-system.git#readme",
   "dependencies": {
     "debug": "^4.1.1",
     "express": "^4.17.0",
