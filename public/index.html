@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+</head>
+
+<body>
+    <div id="conta">
+        <form action="http://localhost:3000/teste" method="POST">
+            Titular da conta: <br>
+            <input type="text" id="fa" name="titular"><br>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+    <!-- <form action="http://localhost:3000/learn" method="POST">
+        <input type="textarea" name="bananinhananica" id="tweets"> </textarea>
+        <input id="right" type="radio" name="nhe" value="right">
+            <label for="right">Direita</label>
+        <input id="left" type="radio" name="nhe" value="left">
+            <label for="left">Esquerda</label>
+        <input type="submit" value="Submit">
+      </form> -->
+    <div id="opr">
+        <form action="http://localhost:3000/opr" method="GET">
+            <br><br><br> Selecione a operação: <br><br>
+            <input type="text" id="fa" name="titular"><br>
+            <input type="radio" name="operation" value="saldo" class="opr"> Saldo
+            <input type="radio" name="operation" value="saque" class="opr"> Saque
+            <input type="radio" name="operation" value="transf" class="opr"> Transferência
+            <input type="radio" name="operation" value="deposito" class="opr"> Depósito
+            <input type="submit" value="Efetuar">
+        </form>
+    </div>
+
+    <div id="dados">
+
+    </div>
+
+</body>
+
+</html>
