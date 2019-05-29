@@ -53,7 +53,7 @@ app.post('/sqdp', async(req, res) => {
             const valorSaque = consulta[0].balance + req.body.valor
             await monguin.update({ "name": req.body.titular }, { $set: { 'balance': valorSaque } }, "bank", "cliente")
             console.log('Method: POST\nRequest: ' + JSON.stringify(req.body) + '\nAccount-DB: ' + JSON.stringify(consulta[0]) + '\n            -----   -----')
-            console.log('Valor após o Depósito: ' + JSON.stringify(await monguin.readOneByParameter({ "name": req.body.titular }, "bank", "cliente")))
+            console.log('Valor após o Depósito: ' + JSON.stringify(await monguin.readOneByParameter({ "name": req.body.titular }, "bank", "cliente" + '\n            -----   -----')))
             res.redirect('http://localhost:3000/')
         } catch (err) {
             return err
@@ -69,7 +69,8 @@ app.post('/transf', async(req, res) => {
             const valorTransfDp = consulta2[0].balance + req.body.valor
             await monguin.update({ "name": req.body.titular }, { $set: { 'balance': valorTransfSq } }, "bank", "cliente")
             await monguin.update({ "name": req.body.titularfinal }, { $set: { 'balance': valorTransfDp } }, "bank", "cliente")
-            console.log('Transferência concluída.')
+            console.log('Method: POST \nRequest: ' + JSON.stringify(req.body) + ' \nUser Account: ' + JSON.stringify(consulta) + ' \nFinal Transation Account: ' + JSON.stringify(consulta2) + '\n Value to Transfer: ' + req.body.valor)
+            console.log('\n            -----   -----\nTransferência concluída.')
             res.redirect('http://localhost:3000/')
         } else {
             alert('Destinatário inválido')
