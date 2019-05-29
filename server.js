@@ -61,26 +61,29 @@ app.post('/sqdp', async(req, res) => {
     }
 })
 app.post('/transf', async(req, res) => {
-
-})
-app.get('/rapaz', async(req, res) => {
-    res.send('rapaz')
+    try {
+        const consulta = await monguin.readOneByParameter({ "name": req.body.titular }, "bank", "cliente")
+        const consulta2 = await monguin.readOneByParameter({ "name": req.body.titularfinal }, "bank", "cliente")
+        if (consulta2) {
+            const valorTransfSq = consulta[0].balance - req.body.valor
+            const valorTransfDp = consulta2[0].balance + req.body.valor
+            await monguin.update({ "name": req.body.titular }, { $set: { 'balance': valorTransfSq } }, "bank", "cliente")
+            await monguin.update({ "name": req.body.titularfinal }, { $set: { 'balance': valorTransfDp } }, "bank", "cliente")
+            console.log('Transferência concluída.')
+            res.redirect('http://localhost:3000/')
+        } else {
+            alert('Destinatário inválido')
+            res.redirect('http://localhost:3000/')
+        }
+    } catch (err) {
+        return err
+    }
 })
 
 // Listener da porta
 app.listen(port, () => {
     console.log(' ----------------------\n|      SERVER ON!      |\n|      Porta: ' + port + '     |\n ----------------------')
 })
-
-// FUNCTION QUE CONSULTA AS VARIÁVEIS QUE O EDGE SETA POR PADRÃO (ELE VERIFICA AS PORTAS DISPONÍVEIS).
-function normalizePort(val) {
-    const port1 = parseInt(val, 10)
-    if (isNaN(port1))
-        return val
-    if (port1 >= 0)
-        return port1
-    return false;
-}
 
 // FUNCTION QUE TRAZ MAIS DETALHES SOBRE ERROS DE PRIVILEGIOS, ETC.
 function onError(error) {

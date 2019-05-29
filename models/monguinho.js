@@ -39,7 +39,7 @@ exports.update = (query, newValues, dbName, tableName) => {
             const dbo = db.db(dbName)
             dbo.collection(tableName).updateOne(query, newValues, (err, result) => {
                 if (err) reject(err)
-                console.log('up to date')
+                    // console.log('up to date')
                 resolve('Success ' + result)
             })
         })
