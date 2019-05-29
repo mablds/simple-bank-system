@@ -12,10 +12,10 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 // Rotas
 // Consulta de conta por titular
-app.post('/teste', async(req, res) => {
+app.get('/teste', async(req, res) => {
     try {
-        const consulted = await monguin.readOneByParameter({ "name": req.body.titular }, "bank", "cliente")
-        console.log('Method: POST\nRequest: ' + JSON.stringify(req.body) + '\nAccount-DB: ' + JSON.stringify(consulted) + '\n            -----   -----')
+        const consulted = await monguin.readOneByParameter({ "name": req.query.titular }, "bank", "cliente")
+        console.log('Method: GET\nRequest: ' + JSON.stringify(req.query) + '\nAccount-DB: ' + JSON.stringify(consulted) + '\n            -----   -----')
         res.redirect('http://localhost:3000/')
     } catch (err) {
         return err
@@ -64,7 +64,7 @@ app.post('/transf', async(req, res) => {
     try {
         const consulta = await monguin.readOneByParameter({ "name": req.body.titular }, "bank", "cliente")
         const consulta2 = await monguin.readOneByParameter({ "name": req.body.titularfinal }, "bank", "cliente")
-        if (consulta2) {
+        if (consulta2[0]) {
             const valorTransfSq = consulta[0].balance - req.body.valor
             const valorTransfDp = consulta2[0].balance + req.body.valor
             await monguin.update({ "name": req.body.titular }, { $set: { 'balance': valorTransfSq } }, "bank", "cliente")
