@@ -61,12 +61,7 @@ app.post('/sqdp', async(req, res) => {
     }
 })
 app.post('/transf', async(req, res) => {
-    // const consulted = await monguin.update({ "name": req.body.titular }, { "name": req.body.titular, "balance":} "bank", "cliente")
-    // console.log('Method: GET\nRequest: ' + requested + '\nAccount-DB: ' + JSON.stringify(consulted) + '\n            -----   -----')
-    // consulted.forEach(el => {
-    //     res.send(el.name + ', o saldo disponível da conta é: R$' + el.balance)
-    // })
-    console.log(req.body)
+
 })
 app.get('/rapaz', async(req, res) => {
     res.send('rapaz')
