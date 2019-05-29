@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express()
+const router = express.Router()
 const port = process.argv[2] || 3000
 const bodyParser = require('body-parser')
 const monguin = require('./models/monguinho')
@@ -12,17 +13,60 @@ app.use(bodyParser.urlencoded({ extended: true }))
 // Rotas
 // Consulta de conta por titular
 app.post('/teste', async(req, res) => {
-    const requested = JSON.stringify(req.body.titular)
-    const consulted = await monguin.readOneByParameter({ "name": req.body.titular }, "bank", "cliente")
-    console.log('request: ' + requested + '\nAccount: ' + JSON.stringify(consulted))
-    res.send(consulted)
+    try {
+        const consulted = await monguin.readOneByParameter({ "name": req.body.titular }, "bank", "cliente")
+        console.log('Method: POST\nRequest: ' + JSON.stringify(req.body) + '\nAccount-DB: ' + JSON.stringify(consulted) + '\n            -----   -----')
+        res.redirect('http://localhost:3000/')
+    } catch (err) {
+        return err
+    }
 })
-app.get('/opr', async(req, res) => {
-    // const requested = JSON.stringify(req.body.titular)
-    const consulted = await monguin.readOneByParameter({ "name": req.body.titular }, "bank", "cliente")
-    consulted.forEach(el => {
-        res.send(el.name + ', o saldo disponível da conta é: R$' + el.balance)
-    })
+app.post('/balance', async(req, res) => {
+    try {
+        const consulted = await monguin.readOneByParameter({ "name": req.body.titular }, "bank", "cliente")
+        console.log('Method: POST\nRequest: ' + JSON.stringify(req.body) + '\nAccount-DB: ' + JSON.stringify(consulted) + '\n            -----   -----')
+        consulted.forEach(el => {
+            console.log(el.name + ', o saldo disponível da conta é: R$' + el.balance + '\n            -----   -----')
+            res.redirect('http://localhost:3000/')
+        })
+    } catch (err) {
+        return err
+    }
+
+})
+app.post('/sqdp', async(req, res) => {
+    if (req.body.operation === 'saque') {
+        try {
+            const consulta = await monguin.readOneByParameter({ "name": req.body.titular }, "bank", "cliente")
+            const valorSaque = consulta[0].balance - req.body.valor
+            await monguin.update({ "name": req.body.titular }, { $set: { 'balance': valorSaque } }, "bank", "cliente")
+            console.log('Method: POST\nRequest: ' + JSON.stringify(req.body) + '\nAccount-DB: ' + JSON.stringify(consulta[0]) + '\n            -----   -----')
+            console.log('Valor após o Saque: ' + JSON.stringify(await monguin.readOneByParameter({ "name": req.body.titular }, "bank", "cliente")))
+            res.redirect('http://localhost:3000/')
+        } catch (err) {
+            return err
+        }
+    }
+    if (req.body.operation === 'deposito') {
+        try {
+            const consulta = await monguin.readOneByParameter({ "name": req.body.titular }, "bank", "cliente")
+            const valorSaque = consulta[0].balance + req.body.valor
+            await monguin.update({ "name": req.body.titular }, { $set: { 'balance': valorSaque } }, "bank", "cliente")
+            console.log('Method: POST\nRequest: ' + JSON.stringify(req.body) + '\nAccount-DB: ' + JSON.stringify(consulta[0]) + '\n            -----   -----')
+            console.log('Valor após o Depósito: ' + JSON.stringify(await monguin.readOneByParameter({ "name": req.body.titular }, "bank", "cliente")))
+            res.redirect('http://localhost:3000/')
+        } catch (err) {
+            return err
+        }
+    }
+})
+app.post('/transf', async(req, res) => {
+    // const consulted = await monguin.update({ "name": req.body.titular }, { "name": req.body.titular, "balance":} "bank", "cliente")
+    // console.log('Method: GET\nRequest: ' + requested + '\nAccount-DB: ' + JSON.stringify(consulted) + '\n            -----   -----')
+    // consulted.forEach(el => {
+    //     res.send(el.name + ', o saldo disponível da conta é: R$' + el.balance)
+    // })
+    console.log(req.body)
 })
 app.get('/rapaz', async(req, res) => {
     res.send('rapaz')

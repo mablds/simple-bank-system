@@ -37,10 +37,10 @@ exports.update = (query, newValues, dbName, tableName) => {
         MongoClient.connect(url, { useNewUrlParser: true }, (err, db) => {
             if (err) throw err
             const dbo = db.db(dbName)
-            dbo.collection(tableName).updateOne(query, newValues, (err, _) => {
+            dbo.collection(tableName).updateOne(query, newValues, (err, result) => {
                 if (err) reject(err)
+                console.log('up to date')
                 resolve('Success ' + result)
-                db.close()
             })
         })
     })
