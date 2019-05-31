@@ -3,45 +3,75 @@
 <html>
 
 <head>
+    <meta charset="utf-8">
+    <title> BankSystem </title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 </head>
 
 <body>
-    <div id="conta">
-        <form action="http://localhost:3000/teste/" method="GET">
-            Titular da conta: <br>
-            <input type="text" id="fa" name="titular"><br>
-            <input type="submit" value="Submit">
-        </form>
-    </div>
-    <div id="balance">
-        <form action="http://localhost:3000/balance" method="POST">
-            <br><br><br> Selecione a operação: <br><br>
-            <input type="text" id="fa" name="titular"><br>
-            <input type="radio" name="operation" value="saldo" class="opr"> Saldo
-            <input type="submit" value="Consultar">
+
+    <div class="container">
+        <table class="table">
+            <form action="http://localhost:3000/balance" method="POST">
+                <tr>
+                    <h3>Saldo</h3>
+                </tr>
+                <td>
+                    <p>Titular: </p><input type="text" id="fa" name="titular">
+                </td>
+
+        </table>
+        <input type="submit" value="Consultar">
         </form>
     </div>
 
-    <div id="sqdp">
-        <form action="http://localhost:3000/sqdp" method="POST">
-            <br><br><br>Titular:
-            <input type="text" id="fa" name="titular"><br> Valor:
-            <input type="text" id="fa" name="valor"><br>
-            <input type="radio" name="operation" value="saque" class="opr"> Saque
-            <input type="radio" name="operation" value="deposito" class="opr"> Depósito
-            <input type="submit" value="Efetuar">
+    <div id="sqdp" class="container">
+        <br><br>
+        <table class="table">
+            <form action="http://localhost:3000/sqdp" method="POST">
+                <tr>
+                    <h3>Saques e Depósitos</h3>
+                    <td>
+                        <h5>Selecione a operação: </h5>
+                        <select name="operation">
+                            <option value="saque">Saque</option>
+                            <option value="deposito">Deposito</option>
+                    </select>
+                    </td>
+                </tr>
+                <td>
+                    <p>Titular:</p><input type="text" id="fa" name="titular"></td>
+                <td>
+                    <p>Valor:</p><input type="text" id="fa" name="valor"></td>
+                <br>
+                <td>
+
+                    <!-- Saque: <input type="radio" name="operation" value="saque" class="opr"> Depósito: <input type="radio" name="operation" value="deposito" class="opr"> -->
+                </td>
+        </table>
+        <input type="submit" value="Efetuar">
         </form>
+        <br><br>
+
     </div>
 
-    <div id="transf">
-        <form action="http://localhost:3000/transf" method="POST">
-            <br><br><br>Titular:
-            <input type="text" id="fa" name="titular"><br> Valor:
-            <input type="text" id="fa" name="valor"><br> Transferir para:
-            <input type="text" id="fa" name="titularfinal"><br>
-            <input type="radio" name="operation" value="transf" class="opr"> Transferência
-            <input type="submit" value="Efetuar">
+    <div id="transf" class="container">
+        <table class="table">
+            <form action="http://localhost:3000/transf" method="POST">
+                <tr>
+                    <h3>Transferência</h3>
+                </tr>
+                <td>
+                    <p>Titular: </p><input type="text" id="fa" name="titular"></td>
+                <td>
+                    <p>Valor: </p><input type="text" id="fa" name="valor"></td>
+                <td>
+                    <p>Transferir para: </p><input type="text" id="fa" name="titularfinal"></td>
+        </table>
+        <input type="submit" value="Efetuar">
         </form>
+
     </div>
 
 </body>

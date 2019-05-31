@@ -4,27 +4,35 @@ const router = express.Router()
 const port = process.argv[2] || 3000
 const bodyParser = require('body-parser')
 const monguin = require('./models/monguinho')
+const hbs = require('hbs')
+hbs.handlebars === require('handlebars');
 
 // Se erro no express(), retornar a função de erro.
+app.set('view engine', 'hbs');
 app.use(bodyParser.json())
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: true }))
+
 
 // Rotas
 // Consulta de conta por titular
 app.get('/teste', async(req, res) => {
     try {
         const consulted = await monguin.readOneByParameter({ "name": req.query.titular }, "bank", "cliente")
-        console.log('Method: GET\nRequest: ' + JSON.stringify(req.query) + '\nAccount-DB: ' + JSON.stringify(consulted) + '\n            -----   -----')
+        console.log(JSON.stringify(consulted) + '\n            -----   -----')
         res.redirect('http://localhost:3000/')
     } catch (err) {
         return err
     }
 })
-app.post('/balance', async(req, res) => {
+
+app.get('/home', (req, res) => {
+    res.render('index')
+})
+
+app.get('/balance', async(req, res) => {
     try {
         const consulted = await monguin.readOneByParameter({ "name": req.body.titular }, "bank", "cliente")
-        console.log('Method: POST\nRequest: ' + JSON.stringify(req.body) + '\nAccount-DB: ' + JSON.stringify(consulted) + '\n            -----   -----')
         consulted.forEach(el => {
             console.log(el.name + ', o saldo disponível da conta é: R$' + el.balance + '\n            -----   -----')
             res.redirect('http://localhost:3000/')
@@ -38,10 +46,9 @@ app.post('/sqdp', async(req, res) => {
     if (req.body.operation === 'saque') {
         try {
             const consulta = await monguin.readOneByParameter({ "name": req.body.titular }, "bank", "cliente")
-            const valorSaque = consulta[0].balance - req.body.valor
+            const valorSaque = parseInt(consulta[0].balance, 10) - parseInt(req.body.valor, 10)
             await monguin.update({ "name": req.body.titular }, { $set: { 'balance': valorSaque } }, "bank", "cliente")
-            console.log('Method: POST\nRequest: ' + JSON.stringify(req.body) + '\nAccount-DB: ' + JSON.stringify(consulta[0]) + '\n            -----   -----')
-            console.log('Valor após o Saque: ' + JSON.stringify(await monguin.readOneByParameter({ "name": req.body.titular }, "bank", "cliente")))
+            console.log('Method: POST\nRequest: ' + JSON.stringify(req.body) + '\n Saque efetuado.')
             res.redirect('http://localhost:3000/')
         } catch (err) {
             return err
@@ -50,23 +57,22 @@ app.post('/sqdp', async(req, res) => {
     if (req.body.operation === 'deposito') {
         try {
             const consulta = await monguin.readOneByParameter({ "name": req.body.titular }, "bank", "cliente")
-            const valorSaque = consulta[0].balance + req.body.valor
+            const valorSaque = parseInt(consulta[0].balance, 10) + parseInt(req.body.valor, 10)
             await monguin.update({ "name": req.body.titular }, { $set: { 'balance': valorSaque } }, "bank", "cliente")
-            console.log('Method: POST\nRequest: ' + JSON.stringify(req.body) + '\nAccount-DB: ' + JSON.stringify(consulta[0]) + '\n            -----   -----')
-            console.log('Valor após o Depósito: ' + JSON.stringify(await monguin.readOneByParameter({ "name": req.body.titular }, "bank", "cliente" + '\n            -----   -----')))
+            console.log('Method: POST\nRequest: ' + JSON.stringify(req.body) + '\n Depósito efetuado.')
             res.redirect('http://localhost:3000/')
         } catch (err) {
             return err
         }
     }
 })
-app.post('/transf', async(req, res) => {
+app.put('/transf', async(req, res) => {
     try {
         const consulta = await monguin.readOneByParameter({ "name": req.body.titular }, "bank", "cliente")
         const consulta2 = await monguin.readOneByParameter({ "name": req.body.titularfinal }, "bank", "cliente")
         if (consulta2[0]) {
-            const valorTransfSq = consulta[0].balance - req.body.valor
-            const valorTransfDp = consulta2[0].balance + req.body.valor
+            const valorTransfSq = parseInt(consulta[0].balance, 10) - parseInt(req.body.valor, 10)
+            const valorTransfDp = parseInt(consulta[0].balance, 10) + parseInt(req.body.valor, 10)
             await monguin.update({ "name": req.body.titular }, { $set: { 'balance': valorTransfSq } }, "bank", "cliente")
             await monguin.update({ "name": req.body.titularfinal }, { $set: { 'balance': valorTransfDp } }, "bank", "cliente")
             console.log('Method: POST \nRequest: ' + JSON.stringify(req.body) + ' \nUser Account: ' + JSON.stringify(consulta) + ' \nFinal Transation Account: ' + JSON.stringify(consulta2) + '\n Value to Transfer: ' + req.body.valor)
