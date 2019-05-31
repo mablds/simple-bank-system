@@ -26,13 +26,10 @@ app.get('/teste', async(req, res) => {
     }
 })
 
-app.get('/home', (req, res) => {
-    res.render('index')
-})
-
 app.get('/balance', async(req, res) => {
+    console.log(req.query)
     try {
-        const consulted = await monguin.readOneByParameter({ "name": req.body.titular }, "bank", "cliente")
+        const consulted = await monguin.readOneByParameter({ "name": req.query.titular }, "bank", "cliente")
         consulted.forEach(el => {
             console.log(el.name + ', o saldo disponível da conta é: R$' + el.balance + '\n            -----   -----')
             res.redirect('http://localhost:3000/')
@@ -66,13 +63,13 @@ app.post('/sqdp', async(req, res) => {
         }
     }
 })
-app.put('/transf', async(req, res) => {
+app.post('/transf', async(req, res) => {
     try {
         const consulta = await monguin.readOneByParameter({ "name": req.body.titular }, "bank", "cliente")
         const consulta2 = await monguin.readOneByParameter({ "name": req.body.titularfinal }, "bank", "cliente")
         if (consulta2[0]) {
             const valorTransfSq = parseInt(consulta[0].balance, 10) - parseInt(req.body.valor, 10)
-            const valorTransfDp = parseInt(consulta[0].balance, 10) + parseInt(req.body.valor, 10)
+            const valorTransfDp = parseInt(consulta2[0].balance, 10) + parseInt(req.body.valor, 10)
             await monguin.update({ "name": req.body.titular }, { $set: { 'balance': valorTransfSq } }, "bank", "cliente")
             await monguin.update({ "name": req.body.titularfinal }, { $set: { 'balance': valorTransfDp } }, "bank", "cliente")
             console.log('Method: POST \nRequest: ' + JSON.stringify(req.body) + ' \nUser Account: ' + JSON.stringify(consulta) + ' \nFinal Transation Account: ' + JSON.stringify(consulta2) + '\n Value to Transfer: ' + req.body.valor)
