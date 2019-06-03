@@ -4,7 +4,8 @@
     "description": "Practicing MongoDB + Nodejs API using a simple bank systems.",
     "main": "server.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node server"
     },
     "repository": {
         "type": "git",

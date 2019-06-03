@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 const router = express.Router()
-const port = process.argv[2] || 3000
+const port = process.env.PORT || 3000
 const bodyParser = require('body-parser')
 const monguin = require('./models/monguinho')
 const hbs = require('hbs')
