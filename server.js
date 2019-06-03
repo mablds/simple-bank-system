@@ -4,11 +4,8 @@ const router = express.Router()
 const port = process.env.PORT || 3000
 const bodyParser = require('body-parser')
 const monguin = require('./models/monguinho')
-const hbs = require('hbs')
-hbs.handlebars === require('handlebars');
 
 // Se erro no express(), retornar a função de erro.
-app.set('view engine', 'hbs');
 app.use(bodyParser.json())
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: true }))
