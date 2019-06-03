@@ -1,5 +1,5 @@
 {
-    "name": "simple bank system",
+    "name": "simplebanksystem",
     "version": "1.0.0",
     "description": "Practicing MongoDB + Nodejs API using a simple bank systems.",
     "main": "server.js",
