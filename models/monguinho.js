@@ -1,5 +1,6 @@
 const MongoClient = require('mongodb').MongoClient
-const url = 'mongodb://localhost:27017/'
+const url = 'mongodb://u5chq5kjfqpss0kerfkj:bHC68iv8pjAAzXvdngD1@brmxemuhbev0zto-mongodb.services.clever-cloud.com:27017/brmxemuhbev0zto'
+    //gitaccount CLEVER CLOUD
 
 // Create
 exports.create = (obj, dbName, tableName) => {
