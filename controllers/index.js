@@ -6,8 +6,10 @@ const express = require('express'),
 const logMiddleware = require('../middlewares/logger.js')
 
 // Routes in use
-router.use('/bank', logMiddleware, )
-router.use('/register', logMiddleware, )
+router.use('/bank', logMiddleware, (req, res) => {
+        res.send('OIA SÓ COMO VAI O HEROKÚUUUU')
+    })
+    // router.use('/register', logMiddleware, )
 
 
 // 404 setup
