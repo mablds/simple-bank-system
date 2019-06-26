@@ -5,11 +5,12 @@ const express = require('express'),
 
 router.post('/', async(req, res) => {
     const verifyAccount = await (Account.find({ titular: req.body.titular, senha: req.body.senha }))
-        // console.log(verifyAccount)
-    if (verifyAccount[0].titular === req.body.titular) {
-        console.log(verifyAccount)
+
+    if (verifyAccount.length !== 0) {
+        res.send(verifyAccount)
     } else {
-        console.log('non ecsiste')
+        console.log('titular: ' + req.body.titular + '\nsenha: ' + req.body.senha + '\n non ecsiste')
+        res.send('Usuário ou senha não existem. TENTAR NOVAMENTE || REGISTRE-SE')
     }
 })
 
