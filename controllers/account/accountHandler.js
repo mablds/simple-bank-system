@@ -1,7 +1,8 @@
-require('../../models/account-model')
+const Account = require('../../models/account-model')
 const mongoose = require('mongoose')
 const express = require('express'),
     router = express.Router()
+
 
 
 //criar no banco
@@ -13,6 +14,8 @@ router.post('/', async(req, res) => {
     })
     await NewAccount.save()
     res.send('saved')
+    console.log('Account Created: \n')
+    console.log(NewAccount)
 })
 
 

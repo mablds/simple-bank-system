@@ -5,9 +5,10 @@ const express = require('express'),
 // Middlewares for entire routes
 const logMiddleware = require('../middlewares/logger.js')
 const accountHandler = require('./account/accountHandler')
+const accountValidation = require('./account/accountValidation')
 
 // Routes in use
-// router.use('/bank', logMiddleware, )
+router.use('/bank', logMiddleware, accountValidation.router)
 router.use('/register', logMiddleware, accountHandler.router)
 
 
