@@ -12,7 +12,7 @@ router.post('/', async(req, res) => {
         saldo: req.body.saldo
     })
     await NewAccount.save()
-    console.log('saved')
+    res.send('saved')
 })
 
 
