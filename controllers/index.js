@@ -7,11 +7,13 @@ const logMiddleware = require('../middlewares/logger.js')
 const accountHandler = require('./account/accountHandler')
 const accountValidation = require('./account/accountValidation')
 
+const path = require('path')
+
 // Routes in use
 router.use('/bank', logMiddleware, accountValidation.router)
 router.use('/register', logMiddleware, accountHandler.router)
 router.use('/', logMiddleware, (req, res) => {
-    res.render('login')
+    res.sendFile(path.join(__dirname, '..', 'public', 'old.html'))
 })
 
 
