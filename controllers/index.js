@@ -11,7 +11,7 @@ const accountValidation = require('./account/accountValidation')
 router.use('/bank', logMiddleware, accountValidation.router)
 router.use('/register', logMiddleware, accountHandler.router)
 router.use('/', logMiddleware, (req, res) => {
-    res.send('BEM VINDO AO BANCO, OTÁRIO')
+    res.render('login')
 })
 
 
