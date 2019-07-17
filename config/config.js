@@ -9,6 +9,9 @@ module.exports.setUpServer = () => {
     app.set('view engine', 'pug')
     app.set("views", path.join(__dirname, "views"))
 
+    const loggerMiddleware = require('../middlewares/logger')
+        // app.use(loggerMiddleware)
+
     app.use("/static", express.static(path.join(__dirname, "public")))
 
     app.use(bodyParser.json())

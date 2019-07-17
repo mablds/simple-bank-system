@@ -1,30 +1,14 @@
-const Account = require('../../models/account-model')
-const mongoose = require('mongoose')
 const express = require('express'),
     router = express.Router()
 
+//CRUD functions
+const getAllAccounts = require('./getAllAccounts')
+const getAccount = require('./getAccount.js')
+const updateAccount = require('./updateAccount.js')
+const deleteAccount = require('./deleteAccount.js')
 
-
-//criar no banco
-router.post('/', async(req, res) => {
-    const NewAccount = new Account({
-        titular: req.body.titular,
-        senha: req.body.senha,
-        saldo: req.body.saldo
-    })
-    await NewAccount.save()
-    res.send('saved')
-    console.log('Account Created: \n')
-    console.log(NewAccount)
-})
-
-
-//transferência
-router.patch('/:idSender/:idReceiver')
-
-//saque, deposito
-router.post('/:id')
-
-
+router.get('/', getAllAccounts.getAll)
+router.post('/', getAccount.getOne)
+router.delete('/', deleteAccount.deleteOne)
 
 exports.router = router

@@ -1,6 +1,11 @@
 const mongoose = require('mongoose')
 
 module.exports = mongoose.model('Account', {
+    conta: {
+        type: Number,
+        required: true,
+        unique: true,
+    },
     titular: {
         type: String,
         required: true,

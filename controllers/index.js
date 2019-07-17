@@ -4,18 +4,17 @@ const express = require('express'),
 
 // Middlewares for entire routes
 const logMiddleware = require('../middlewares/logger.js')
-const accountHandler = require('./account/accountHandler')
-const accountValidation = require('./account/accountValidation')
+router.use(logMiddleware)
 
-const path = require('path')
+//Handlers
+const accountHandler = require('./account/accountHandler')
+const authHandler = require('./auth/authHandler')
+
+// const path = require('path')
 
 // Routes in use
-router.use('/bank', logMiddleware, accountValidation.router)
-router.use('/register', logMiddleware, accountHandler.router)
-router.use('/', logMiddleware, (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'public', 'old.html'))
-})
-
+router.use('/bank', accountHandler.router)
+router.use('/auth', authHandler.router)
 
 // 404 setup
 router.use('*', (req, res) => {
