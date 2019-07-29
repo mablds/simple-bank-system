@@ -6,9 +6,7 @@ module.exports.deleteOne = async(req, res) => {
         const accountToExclude = req.body.conta ? req.body.conta : req.body.titular
         console.log(accountToExclude)
         const bla = await Account.findOneAndDelete({ conta: req.body.conta })
-
-        // const bla = await Account.getOne({ conta: accountToExclude })
-        res.send([bla])
+        res.send('Conta excluída!')
     } catch (err) {
         res.send('err')
     }

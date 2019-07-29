@@ -15,6 +15,9 @@ const authHandler = require('./auth/authHandler')
 // Routes in use
 router.use('/bank', accountHandler.router)
 router.use('/auth', authHandler.router)
+router.use('/', (req, res) => {
+    res.send('Bem vindo à API de Sistema bancário')
+})
 
 // 404 setup
 router.use('*', (req, res) => {
