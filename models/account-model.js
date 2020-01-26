@@ -1,23 +1,26 @@
 const mongoose = require('mongoose')
+const Schema = mongoose.Schema
 
-module.exports = mongoose.model('Account', {
-    conta: {
+const AccountSchema = new Schema({
+    account: {
         type: Number,
         required: true,
         unique: true,
     },
-    titular: {
+    owner: {
         type: String,
         required: true,
     },
-    senha: {
+    password: {
         type: String,
         required: true
     },
-    saldo: {
+    value: {
         type: Number,
         default: 0,
         required: true,
         trim: true,
     }
 })
+
+module.exports = mongoose.model('Account', AccountSchema);
