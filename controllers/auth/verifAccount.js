@@ -12,15 +12,15 @@ module.exports.findByAccount = async(req, res) => {
     }
     if (req.body) {
         const account = await Account.find()
-        const accountToFilter = account.filter((e) => e.titular === req.body.titular)
+        const accountToFilter = account.filter((e) => e.owner === req.body.owner)
         console.log(accountToFilter)
         if (accountToFilter.length > 0) {
             if (req.body.senha === accountToFilter[0].senha) {
 
                 res.send({
                     id: accountToFilter[0]._id,
-                    titular: accountToFilter[0].titular,
-                    saldo: 'R$ ' + accountToFilter[0].saldo,
+                    owner: accountToFilter[0].owner,
+                    value: 'R$ ' + accountToFilter[0].value,
                     token: generateToken({ id: accountToFilter[0]._id })
                 })
             } else {
