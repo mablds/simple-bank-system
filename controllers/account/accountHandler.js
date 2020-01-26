@@ -1,5 +1,5 @@
-const express = require('express'),
-    router = express.Router()
+const express = require('express')
+const router = express.Router()
 
 //CRUD functions
 const getAllAccounts = require('./getAllAccounts')
@@ -10,12 +10,12 @@ const deleteAccount = require('./deleteAccount.js')
 
 //Routes and Middlewares
 router.get('/', getAllAccounts.getAll)
-router.post('/', getAccount.getOne)
-router.post('/criar', createAccount.create)
-router.post('/deposito', updateAccount.deposita)
-router.post('/saque', updateAccount.saque)
-router.put('/transferir', updateAccount.trasnfere)
-router.delete('/delete', deleteAccount.deleteOne)
+router.get('/:account', getAccount.getOne)
+router.post('/create', createAccount)
+router.post('/deposit', updateAccount.deposit)
+router.post('/withdraw', updateAccount.withdraw)
+router.put('/transfer', updateAccount.trasnfer)
+router.delete('/delete', deleteAccount)
 
 
-exports.router = router
+module.exports = router

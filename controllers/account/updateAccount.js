@@ -1,67 +1,75 @@
 const Account = require('../../models/account-model')
-const getAccount = require('./getAccount')
 
-module.exports.trasnfere = async(req, res) => {
-    if (!req.body.incConta || !req.body.outConta || !req.body.value) return res.send('Body inválido.')
-    const out = req.body.outConta
-    const inc = req.body.incConta
-    const value = req.body.value
-    console.log(req.body)
+module.exports.trasnfer = async(req, res) => {
+    if (!req.body.incAccount || !req.body.outAccount || !req.body.value) return res.send('Body inválido.')
+    const out = req.body.outAccount
+    const inc = req.body.incAccount
+    const valueOfTransaction = req.body.value
 
-    const outAccount = await Account.findOne({ conta: out })
-    const tira = outAccount.saldo - value
-    const incAccount = await Account.findOne({ conta: inc })
-    const recebe = incAccount.saldo + value
+    const accountTransferOut = await Account.findOne({ account: out })
+    const transferWithdraw = accountTransferOut.value - valueOfTransaction
+    const accountTransferInc = await Account.findOne({ account: inc })
+    const transferDeposit = accountTransferInc.value + valueOfTransaction
     try {
-        await Account.findByIdAndUpdate(outAccount._id, { saldo: tira })
-        await Account.findByIdAndUpdate(incAccount._id, { saldo: recebe })
+        await Account.findByIdAndUpdate(accountTransferOut._id, { value: transferWithdraw })
+        await Account.findByIdAndUpdate(accountTransferInc._id, { value: transferDeposit })
         res.send('Transferência executada com sucesso.')
     } catch (err) {
         res.send(err)
     }
 }
 
-module.exports.deposita = async(req, res) => {
-    if (!req.body.titular && !req.body.id && !req.body.conta && !req.body.value) return res.send('body inválido')
+module.exports.deposit = async(req, res) => {
+    if (!req.body.owner && !req.body.account && !req.body.value) return res.send('body inválido')
     let params
     let paramsType
-    if (!req.body.titular && !req.body.id) {
-        params = req.body.conta
-        paramsType = { conta: params }
-    } else if (!req.body.conta && !req.body.titular) {
+    if (!req.body.owner && !req.body.id) {
+        params = req.body.account
+        paramsType = { account: params }
+    } else if (!req.body.account && !req.body.owner) {
         params = req.body.id
         paramsType = { _id: params }
     } else {
-        params = req.body.titular
-        paramsType = { titular: params }
+        params = req.body.owner
+        paramsType = { owner: params }
     }
     const account = await Account.findOne(paramsType)
-    const saldo = parseInt(account.saldo)
-    const value = saldo + req.body.value
-    await Account.where({ titular: account.titular }).update({ saldo: value })
-    res.send('Depósito efetuado com sucesso!')
+    const saldo = parseInt(account.value)
+    const valueAfterDeposit = saldo + req.body.value
+
+    try {
+        await Account.updateOne({ owner: account.owner }, { value: valueAfterDeposit })
+        res.send('Depósito efetuado com sucesso!')
+    } catch (error) {
+        res.send(error)
+    }
 }
 
 
-module.exports.saque = async(req, res) => {
-    if (!req.body.titular && !req.body.id && !req.body.conta) return res.send('body inválido')
+module.exports.withdraw = async(req, res) => {
+    if (!req.body.owner && !req.body.account) return res.send('body inválido')
     if (!req.body.value) res.send('body inválido')
     let params
     let paramsType
-    if (!req.body.titular && !req.body.id) {
-        params = req.body.conta
-        paramsType = { conta: params }
-    } else if (!req.body.conta && !req.body.titular) {
+    if (!req.body.owner && !req.body.id) {
+        params = req.body.account
+        paramsType = { account: params }
+    } else if (!req.body.account && !req.body.owner) {
         params = req.body.id
         paramsType = { _id: params }
     } else {
-        params = req.body.titular
-        paramsType = { titular: params }
+        params = req.body.owner
+        paramsType = { owner: params }
     }
 
     const account = await Account.findOne(paramsType)
-    const saldo = parseInt(account.saldo)
-    const value = saldo - req.body.value
-    await Account.where({ titular: account.titular }).update({ saldo: value })
-    res.send('Saque efetuado com sucesso')
+    const withdrawValue = parseInt(account.value)
+    const valueAfterWithdraw = withdrawValue - req.body.value
+
+    try {
+        await Account.updateOne({ owner: account.owner }, { value: valueAfterWithdraw })
+        res.send('Saque efetuado com sucesso')
+    } catch (error) {
+        res.send(error)        
+    }
 }
