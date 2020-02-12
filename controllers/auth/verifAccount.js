@@ -12,10 +12,9 @@ module.exports.findByAccount = async(req, res) => {
     }
     if (req.body) {
         const account = await Account.find()
-        const accountToFilter = account.filter((e) => e.owner === req.body.owner)
-        console.log(accountToFilter)
+        const accountToFilter = account.filter((e) => e.account === req.body.account)
         if (accountToFilter.length > 0) {
-            if (req.body.senha === accountToFilter[0].senha) {
+            if (req.body.password === accountToFilter[0].password) {
                 res.status(200).send({
                     id: accountToFilter[0]._id,
                     owner: accountToFilter[0].owner,
