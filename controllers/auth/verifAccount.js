@@ -16,18 +16,17 @@ module.exports.findByAccount = async(req, res) => {
         console.log(accountToFilter)
         if (accountToFilter.length > 0) {
             if (req.body.senha === accountToFilter[0].senha) {
-
-                res.send({
+                res.status(200).send({
                     id: accountToFilter[0]._id,
                     owner: accountToFilter[0].owner,
                     value: 'R$ ' + accountToFilter[0].value,
                     token: generateToken({ id: accountToFilter[0]._id })
                 })
             } else {
-                res.send('senha incorreta')
+                res.status(403).send('senha incorreta')
             }
         }
     } else {
-        res.send('Body vazio')
+        res.status(204).send('Body vazio')
     }
 }
