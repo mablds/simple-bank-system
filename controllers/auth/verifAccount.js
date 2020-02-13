@@ -15,17 +15,17 @@ module.exports.findByAccount = async(req, res) => {
         const accountToFilter = account.filter((e) => e.account === req.body.account)
         if (accountToFilter.length > 0) {
             if (req.body.password === accountToFilter[0].password) {
-                res.status(200).send({
+                res.status(200).json({
                     id: accountToFilter[0]._id,
                     owner: accountToFilter[0].owner,
                     value: 'R$ ' + accountToFilter[0].value,
                     token: generateToken({ id: accountToFilter[0]._id })
                 })
             } else {
-                res.status(403).send('senha incorreta')
+                res.status(403).json({ msg: 'senha incorreta' })
             }
         }
     } else {
-        res.status(204).send('Body vazio')
+        res.status(204).json({ msg: 'Body vazio' })
     }
 }
