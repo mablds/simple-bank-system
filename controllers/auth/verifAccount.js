@@ -3,8 +3,6 @@ const jwt = require('jsonwebtoken')
 const hash = process.env.SECRET_HASH
 
 module.exports.findByAccount = async(req, res) => {
-    console.log(req.body)
-
     function generateToken(params = {}) {
         return jwt.sign(params, hash, {
             expiresIn: 3600 //1h
@@ -19,7 +17,8 @@ module.exports.findByAccount = async(req, res) => {
                     id: accountToFilter[0]._id,
                     owner: accountToFilter[0].owner,
                     value: 'R$ ' + accountToFilter[0].value,
-                    token: generateToken({ id: accountToFilter[0]._id })
+                    admin: accountToFilter[0].admin,
+                    token: generateToken({ id: accountToFilter[0]._id, admin: accountToFilter[0].admin })
                 })
             } else {
                 res.status(403).json({ msg: 'senha incorreta' })
