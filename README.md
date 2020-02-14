@@ -35,33 +35,7 @@ There are just few routes that were created to study about APIs and how to deal 
 - Params: None
 - Headers: None
 ```
-___
 
-### Authentication
-```
-- URL: '/auth'
-- HTTP Method: POST
-- Params: None
-- Headers: None
-- Body: account and password
-```
-###### Body request example to test:
-```
-{
-    account: 7839,
-    password: "bla"
-}
-```
-###### Expected responses:
-```
-- **HTTP Status Code: 200**
-{
-    "id": "5e2dec5179c2af11d4b4e61f",
-    "owner": "Marcelo",
-    "value": "R$ 20000",
-    "token": "SomeJWTsecureToken"
-}
-```
 ___
 ### Bank Queries
 
