@@ -45,7 +45,6 @@ module.exports.deposit = async(req, res) => {
     }
 }
 
-
 module.exports.withdraw = async(req, res) => {
     if (!req.body.owner && !req.body.account) return res.send('body inválido')
     if (!req.body.value) res.send('body inválido')
