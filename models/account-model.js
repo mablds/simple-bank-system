@@ -20,6 +20,10 @@ const AccountSchema = new Schema({
         default: 0,
         required: true,
         trim: true,
+    },
+    admin: {
+        type: Boolean,
+        default: false
     }
 })
 

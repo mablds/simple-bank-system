@@ -13,7 +13,8 @@ module.exports = async(req, res) => {
         account: numberCreated,
         value: 0,
         owner: req.body.owner,
-        password: req.body.password
+        password: req.body.password,
+        admin: req.body.admin ? req.body.admin : false 
     }
 
     try {
