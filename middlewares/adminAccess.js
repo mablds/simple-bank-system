@@ -19,7 +19,7 @@ module.exports = (req, res, next) => {
             })
         } else {
             req.decoded = decoded
-            if (req.decoded.admin) {
+            if (req.decoded.admin === "true") {
                 next()
             } else {
                 return res.status(401).json({ msg: 'Please do the authentication with a admin account to proceed with the API Functions' })

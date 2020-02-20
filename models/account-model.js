@@ -22,7 +22,7 @@ const AccountSchema = new Schema({
         trim: true,
     },
     admin: {
-        type: Boolean,
+        type: String,
         default: false
     }
 })
