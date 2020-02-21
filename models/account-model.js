@@ -5,11 +5,11 @@ const AccountSchema = new Schema({
     account: {
         type: Number,
         required: true,
-        unique: true,
+        unique: true
     },
     owner: {
         type: String,
-        required: true,
+        required: true
     },
     password: {
         type: String,
@@ -19,11 +19,15 @@ const AccountSchema = new Schema({
         type: Number,
         default: 0,
         required: true,
-        trim: true,
+        trim: true
     },
     admin: {
         type: String,
         default: false
+    },
+    email: {
+        type: String,
+        required: true
     }
 })
 
