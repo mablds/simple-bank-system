@@ -14,6 +14,7 @@ module.exports = async(req, res) => {
         value: 0,
         owner: req.body.owner,
         password: req.body.password,
+        email: req.body.email,
         admin: req.body.admin ? req.body.admin : false 
     }
 
