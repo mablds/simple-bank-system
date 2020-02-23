@@ -93,6 +93,7 @@ AdminPrivilege: false,
 Header: --,
 Body: {
     "owner": "teste",
+    "email": "agoodemail@emailcompany.com",
     "password": "teste"
 }
 ```
@@ -105,7 +106,6 @@ Method: POST,
 AdminPrivilege: false,
 Header: --,
 Body: {
-    "owner": "teste",
     "account": 000,
     "value": 3000
 }
