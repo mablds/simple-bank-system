@@ -21,24 +21,13 @@ module.exports.trasnfer = async(req, res) => {
 
 module.exports.deposit = async(req, res) => {
     if (!req.body.owner && !req.body.account && !req.body.value) return res.send('body inválido')
-    let params
-    let paramsType
-    if (!req.body.owner && !req.body.id) {
-        params = req.body.account
-        paramsType = { account: params }
-    } else if (!req.body.account && !req.body.owner) {
-        params = req.body.id
-        paramsType = { _id: params }
-    } else {
-        params = req.body.owner
-        paramsType = { owner: params }
-    }
-    const account = await Account.findOne(paramsType)
+
+    const account = await Account.findOne({ account: req.body.account })
     const saldo = parseInt(account.value)
     const valueAfterDeposit = saldo + req.body.value
 
     try {
-        await Account.updateOne({ owner: account.owner }, { value: valueAfterDeposit })
+        await Account.updateOne({ account: req.body.account }, { value: valueAfterDeposit })
         res.send('Depósito efetuado com sucesso!')
     } catch (error) {
         res.send(error)
