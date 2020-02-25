@@ -9,7 +9,8 @@ module.exports.findByAccount = async(req, res) => {
         })
     }
     if (req.body) {
-        const account = await Account.find()
+        if(!req.body.account) res.status(204).json({ msg: 'Favor informar uma conta válida' })
+        const account = await Account.find({ email: req.body.email })
         const accountToFilter = account.filter((e) => e.account === req.body.account)
         if (accountToFilter.length > 0) {
             if (req.body.password === accountToFilter[0].password) {
