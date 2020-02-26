@@ -1,7 +1,7 @@
 const Account = require('../../models/account-model')
 
 module.exports.trasnfer = async(req, res) => {
-    if (!req.body.incAccount || !req.body.outAccount || !req.body.value) return res.send('Body inválido.')
+    if (!req.body.incAccount || !req.body.outAccount || !req.body.value) return res.status(204).json({ msg: 'Favor informar um Body válido' })
     const out = req.body.outAccount
     const inc = req.body.incAccount
     const valueOfTransaction = req.body.value
@@ -13,14 +13,14 @@ module.exports.trasnfer = async(req, res) => {
     try {
         await Account.findByIdAndUpdate(accountTransferOut._id, { value: transferWithdraw })
         await Account.findByIdAndUpdate(accountTransferInc._id, { value: transferDeposit })
-        res.send('Transferência executada com sucesso.')
+        res.status(200).json({ msg: 'Transferência executada com sucesso.' })
     } catch (err) {
-        res.send(err)
+        res.status(500).json({ msg: 'Internal Error. Please contact the administrator' })
     }
 }
 
 module.exports.deposit = async(req, res) => {
-    if (!req.body.owner && !req.body.account && !req.body.value) return res.send('body inválido')
+    if (!req.body.owner && !req.body.account && !req.body.value) return res.status(204).json({ msg: 'Favor informar um Body válido' })
 
     const account = await Account.findOne({ account: req.body.account })
     const saldo = parseInt(account.value)
@@ -28,36 +28,24 @@ module.exports.deposit = async(req, res) => {
 
     try {
         await Account.updateOne({ account: req.body.account }, { value: valueAfterDeposit })
-        res.send('Depósito efetuado com sucesso!')
+        res.status(200).json({ msg: 'Depósito executado com sucesso.' })
     } catch (error) {
-        res.send(error)
+        res.status(500).json({ msg: 'Internal Error. Please contact the administrator' })
     }
 }
 
 module.exports.withdraw = async(req, res) => {
-    if (!req.body.owner && !req.body.account) return res.send('body inválido')
-    if (!req.body.value) res.send('body inválido')
-    let params
-    let paramsType
-    if (!req.body.owner && !req.body.id) {
-        params = req.body.account
-        paramsType = { account: params }
-    } else if (!req.body.account && !req.body.owner) {
-        params = req.body.id
-        paramsType = { _id: params }
-    } else {
-        params = req.body.owner
-        paramsType = { owner: params }
-    }
+    if (!req.body.owner && !req.body.account && !req.body.value) return res.status(204).json({ msg: 'Favor informar um Body válido' });
+    let accountToSearch = req.body.account
 
-    const account = await Account.findOne(paramsType)
-    const withdrawValue = parseInt(account.value)
+    const accountSearched = await Account.findOne({ account: accountToSearch })
+    const withdrawValue = parseInt(accountSearched.value)
     const valueAfterWithdraw = withdrawValue - req.body.value
 
     try {
-        await Account.updateOne({ owner: account.owner }, { value: valueAfterWithdraw })
-        res.send('Saque efetuado com sucesso')
+        await Account.updateOne({ account: accountSearched.account }, { value: valueAfterWithdraw })
+        res.status(200).json({ msg: 'Saque executado com sucesso.' })
     } catch (error) {
-        res.send(error)        
+        res.status(500).json({ msg: 'Internal Error. Please contact the administrator' })      
     }
 }
