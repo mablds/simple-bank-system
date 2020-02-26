@@ -13,7 +13,7 @@ module.exports.findByAccount = async(req, res) => {
         //if(!req.body.email) res.status(204).json({ msg: 'Favor informar uma email válido' })
 
         const account = await Account.find({ account: req.body.account })
-        if (req.body.password === account.password) {
+        if (req.body.password === account[0].password) {
             res.status(200).json({
                 id: accountToFilter[0]._id,
                 owner: accountToFilter[0].owner,
