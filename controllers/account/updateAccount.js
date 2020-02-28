@@ -7,9 +7,17 @@ module.exports.trasnfer = async(req, res) => {
     const valueOfTransaction = req.body.value
 
     const accountTransferOut = await Account.findOne({ account: out })
-    const transferWithdraw = accountTransferOut.value - valueOfTransaction
+    
+    //Caso o haja saldo disponível para a transferência...
+    let transferWithdraw
+    if(accountTransferOut.value > valueOfTransaction) {
+        transferWithdraw = accountTransferOut.value - valueOfTransaction
+    } else {
+        return res.status(400).json({ msg: 'Não há saldo disponível para a transação se completar.' })
+    }
+    
     const accountTransferInc = await Account.findOne({ account: inc })
-    const transferDeposit = accountTransferInc.value + valueOfTransaction
+    let transferDeposit = accountTransferInc.value + valueOfTransaction
     try {
         await Account.findByIdAndUpdate(accountTransferOut._id, { value: transferWithdraw })
         await Account.findByIdAndUpdate(accountTransferInc._id, { value: transferDeposit })
