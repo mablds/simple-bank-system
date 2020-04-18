@@ -28,7 +28,7 @@ module.exports.trasnfer = async(req, res) => {
 }
 
 module.exports.deposit = async(req, res) => {
-    if (!req.body.owner && !req.body.account && !req.body.value) return res.status(204).json({ msg: 'Favor informar um Body válido' })
+    if (!req.body.account && !req.body.value) return res.status(204).json({ msg: 'Favor informar um Body válido' })
 
     const account = await Account.findOne({ account: req.body.account })
     const saldo = parseInt(account.value)
