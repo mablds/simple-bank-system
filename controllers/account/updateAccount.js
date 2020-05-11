@@ -10,7 +10,7 @@ module.exports.trasnfer = async(req, res) => {
     
     //Caso o haja saldo disponível para a transferência...
     let transferWithdraw
-    if(accountTransferOut.value > valueOfTransaction) {
+    if(accountTransferOut.value >= valueOfTransaction) {
         transferWithdraw = accountTransferOut.value - valueOfTransaction
     } else {
         return res.status(400).json({ msg: 'Não há saldo disponível para a transação se completar.' })
@@ -43,7 +43,7 @@ module.exports.deposit = async(req, res) => {
 }
 
 module.exports.withdraw = async(req, res) => {
-    if (!req.body.owner && !req.body.account && !req.body.value) return res.status(204).json({ msg: 'Favor informar um Body válido' });
+    if (!req.body.account && !req.body.value) return res.status(204).json({ msg: 'Favor informar um Body válido' });
     let accountToSearch = req.body.account
 
     const accountSearched = await Account.findOne({ account: accountToSearch })
