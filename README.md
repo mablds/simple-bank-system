@@ -58,8 +58,8 @@ Method: POST,
 AdminPrivilege: false,
 Header: --,
 Body: {
-        account: 9434,
-        password: "testadinha"
+        email: teste@teste.com,
+        password: "teste"
     }
 ```
 
