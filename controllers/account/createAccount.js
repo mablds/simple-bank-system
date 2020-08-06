@@ -27,7 +27,7 @@ module.exports = async(req, res) => {
         
         const creation = await Account.create(userToCreate)
         mailSender(`Bem vindo ao iBank, ${userToCreate.owner}! Estamos muito contentes em tê-lo(a) conosco.\nO número de sua Conta é: ${userToCreate.account}\n`, userToCreate.email, 'Bem vindo ao iBank '+ userToCreate.owner);
-        return res.send(creation)
+        return res.status(201).send(creation)
     }  catch(err) {
         console.log(err)
         res.status(500).json({ msg: 'Algum erro de comunicação no processo de criação de conta ocorreu. Tente novamente.' })
