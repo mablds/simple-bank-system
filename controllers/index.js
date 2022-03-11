@@ -17,13 +17,7 @@ const authHandler = require('./auth/authHandler')
 // Routes in use
 router.use('/bank', accountHandler)
 router.use('/auth', authHandler)
-router.use('/', (req, res) => {
-    res.send('Bem vindo à API de Sistema bancário')
-})
-
-// 404 setup
-router.use('*', (req, res) => {
-    res.status(404).send('Page Not Found')
-})
+router.use('/', (_, res) => res.status(200).json({msg: 'Bem vindo à API de Sistema bancário'}))
+router.use('*', (_, res) => res.status(404).json({msg: 'Página não encontrada'}))
 
 module.exports = router
