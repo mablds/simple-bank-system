@@ -23,7 +23,7 @@ module.exports.trasnfer = async(req, res) => {
     await Account.findByIdAndUpdate(accountTransferInc._id, { value: transferDeposit })
     return res.status(200).json({ msg: 'Transferência executada com sucesso.' })
   } catch (err) {
-    return res.status(500).json({ msg: 'Internal Error. Please contact the administrator' })
+    return res.status(500).json({ msg: 'Erro interno. Se persistir, entre em contato com o Administrador' })
   }
 }
 
@@ -36,9 +36,9 @@ module.exports.deposit = async(req, res) => {
 
   try {
     await Account.updateOne({ account: req.body.account }, { value: valueAfterDeposit })
-    res.status(200).json({ msg: 'Depósito executado com sucesso.' })
+    return res.status(200).json({ msg: 'Depósito executado com sucesso.' })
   } catch (error) {
-    res.status(500).json({ msg: 'Internal Error. Please contact the administrator' })
+    return res.status(500).json({ msg: 'Erro interno. Se persistir, entre em contato com o Administrador' })
   }
 }
 
@@ -52,8 +52,8 @@ module.exports.withdraw = async(req, res) => {
 
   try {
     await Account.updateOne({ account: accountSearched.account }, { value: valueAfterWithdraw })
-    res.status(200).json({ msg: 'Saque executado com sucesso.' })
+    return res.status(200).json({ msg: 'Saque executado com sucesso.' })
   } catch (error) {
-    res.status(500).json({ msg: 'Internal Error. Please contact the administrator' })      
+    return res.status(500).json({ msg: 'Erro interno. Se persistir, entre em contato com o Administrador' })      
   }
 }

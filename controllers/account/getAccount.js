@@ -4,8 +4,8 @@ module.exports.getOne = async(req, res) => {
   if (!req.params.account) res.status(400).send('Parâmetros vazios. Informe uma conta válida.')
   try {
     const account = await Account.findOne({ account: req.params.account })
-    res.status(200).send(account)
+    return res.status(200).send(account)
   } catch (err) {
-    res.status(500).send(err)
+    return res.status(500).send(err)
   }
 }
