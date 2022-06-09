@@ -1,0 +1,36 @@
+name: Build Simple Bank API Docker image and deploy to Heroku
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  deploy:
+    name: Build and deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build and push Docker to Heroku
+
+        env:
+          EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
+          EMAIL_SENDER_PASS: ${{ secrets.EMAIL_SENDER_PASS }}
+          MONGO_URI: ${{ secrets.MONGO_URI }}
+          SECRET_HASH: ${{ secrets.SECRET_HASH }}
+          HEROKU_APP_NAME: "simple-bank"
+          HEROKU_EMAIL: "marcelobragalemos@gmail.com"
+          HEROKU_API_KEY: "1a7d1a47-1260-4d8c-87b3-d1144934a7d5"
+          DOCKERFILE_NAME: "Dockerfile"
+
+        run: |
+          echo ${HEROKU_API_KEY} | docker login \
+            --username=${HEROKU_EMAIL} \
+            registry.heroku.com \
+            --password-stdin
+          docker build \
+            --file ${DOCKERFILE_NAME} \
+            ${DOCKER_OPTIONS} \
+            --tag registry.heroku.com/${HEROKU_APP_NAME}/web .
+          heroku container:push web --app ${HEROKU_APP_NAME}
+          heroku container:release web --app ${HEROKU_APP_NAME}
