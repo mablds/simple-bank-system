@@ -12,8 +12,6 @@ router.use(logMiddleware)
 const accountHandler = require('./account/accountHandler')
 const authHandler = require('./auth/authHandler')
 
-// const path = require('path')
-
 // Routes in use
 router.use('/bank', accountHandler)
 router.use('/auth', authHandler)
