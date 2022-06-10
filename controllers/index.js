@@ -2,12 +2,6 @@
 const express = require('express')
 const router = express.Router()
 
-// Middlewares for entire routes
-const logMiddleware = require('../middlewares/logger.js')
-
-//logger middleware added
-router.use(logMiddleware)
-
 //Handlers
 const accountHandler = require('./account/accountHandler')
 const authHandler = require('./auth/authHandler')
