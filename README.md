@@ -1,7 +1,6 @@
 # Bank System Simulator
 
-Practicing MongoDB + Nodejs API using a simple bank systems. 
-
+An API with educational purposes that simulates bank operations. At first created to improve my knowledge of Node.js, Express and MongoDB but now it is available to everyone enjoy and build their own Frontend Applications (web or mobile).
 
 ## Installation
 
