@@ -8,7 +8,6 @@ module.exports.trasnfer = async(req, res) => {
 
   const accountTransferOut = await Account.findOne({ account: out })
     
-  //Caso o haja saldo disponível para a transferência...
   let transferWithdraw
   if(accountTransferOut.value >= valueOfTransaction) {
     transferWithdraw = accountTransferOut.value - valueOfTransaction
