@@ -1,6 +1,6 @@
 # Bank System Simulator
 
-There's a lot of things I want to change in this project. It is an old project created with educational purposes that simulates bank operations. At first created to improve my knowledge of Node.js, Express and MongoDB but now it is available to everyone enjoy and build their own Frontend Applications (web or mobile).
+There's a lot of things I want to change/improve in this project. It is an old project created with educational purposes that simulates bank operations. At first created to improve my knowledge of Node.js, Express and MongoDB but now it is available to everyone enjoy and build their own Frontend Applications (web or mobile).
 
 ## Installation
 
